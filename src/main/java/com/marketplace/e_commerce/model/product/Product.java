@@ -1,4 +1,5 @@
-package com.marketplace.e_commerce.model;
+package com.marketplace.e_commerce.model.product;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,22 +11,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-@Entity(name = "users")
-@Table(name = "users")
+@Entity
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(name = "name", nullable = false)
+    private String productName;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "price", nullable = false)
+    private double productPrice;
+
+    @Column(name = "stock_quantity")
+    private Long StockQuantity;
+
+    @Column(name = "imageUrl")
+    private String productImageUrl;
 }

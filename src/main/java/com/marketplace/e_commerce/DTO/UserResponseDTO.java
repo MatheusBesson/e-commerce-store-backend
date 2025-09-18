@@ -1,6 +1,6 @@
 package com.marketplace.e_commerce.DTO;
 
-import com.marketplace.e_commerce.model.User;
+import com.marketplace.e_commerce.model.user.User;
 
 public record UserResponseDTO(
         Long id,
