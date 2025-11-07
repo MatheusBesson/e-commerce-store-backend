@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -15,7 +16,7 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductResponseDTO register(ProductRequestDTO productRequestDTO) {
+    public ProductResponseDTO postProduct(ProductRequestDTO productRequestDTO) {
 
         Product product = new Product();
 
@@ -27,7 +28,7 @@ public class ProductService {
         Product saved = productRepository.save(product);
 
         return new ProductResponseDTO(
-                saved.getId(),
+                saved.getProductId(),
                 saved.getProductName(),
                 saved.getProductPrice(),
                 saved.getStockQuantity(),
@@ -40,7 +41,7 @@ public class ProductService {
 
         return products.stream()
                 .map(product -> new ProductResponseDTO(
-                        product.getId(),
+                        product.getProductId(),
                         product.getProductName(),
                         product.getProductPrice(),
                         product.getStockQuantity(),
@@ -49,6 +50,21 @@ public class ProductService {
                 .toList();
     }
 
+    public ProductResponseDTO deleteProductById(Long id) {
+        Product productToDelete = productRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Product id not found."));
 
+        ProductResponseDTO productResponseDTO = new ProductResponseDTO(
+                productToDelete.getProductId(),
+                productToDelete.getProductName(),
+                productToDelete.getProductPrice(),
+                productToDelete.getStockQuantity(),
+                productToDelete.getProductImageUrl()
+        );
+
+        productRepository.delete(productToDelete);
+
+        return productResponseDTO;
+    }
 
 }
