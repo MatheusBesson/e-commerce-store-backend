@@ -6,6 +6,9 @@ import com.marketplace.e_commerce.model.product.Product;
 import com.marketplace.e_commerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +52,27 @@ public class ProductService {
                 ))
                 .toList();
     }
+
+    // Update method
+    public ProductResponseDTO updateProduct( ProductRequestDTO productRequestDTOUpdated, Long id) {
+        Product productToUpdate = productRepository.findById(id)
+                    .orElseThrow(() -> new NullPointerException("Product not found in database"));
+
+        productToUpdate.setProductName(productRequestDTOUpdated.productName());
+        productToUpdate.setProductPrice(productRequestDTOUpdated.productPrice());
+        productToUpdate.setProductImageUrl(productToUpdate.getProductImageUrl());
+        productToUpdate.setStockQuantity(productToUpdate.getStockQuantity());
+
+        Product saved = productRepository.save(productToUpdate);
+
+        return new ProductResponseDTO(productToUpdate.getProductId(),
+                saved.getProductName(),
+                saved.getProductPrice(),
+                saved.getStockQuantity(),
+                saved.getProductImageUrl());
+    }
+
+
 
     public ProductResponseDTO deleteProductById(Long id) {
         Product productToDelete = productRepository.findById(id)
