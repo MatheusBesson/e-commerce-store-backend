@@ -37,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
+        System.out.println("🔥 JWT FILTER EXECUTANDO");
+
 
         String authHeader = request.getHeader("Authorization");
         System.out.println("AUTH HEADER >>> " + authHeader);
@@ -58,13 +60,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            User user =  userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+            User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
                             email,
                             null,
-                           Collections.emptyList() // roles depois
+                            Collections.emptyList() // roles depois
                     );
 
             authentication.setDetails(

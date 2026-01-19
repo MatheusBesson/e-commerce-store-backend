@@ -51,5 +51,12 @@ public class UserController {
         return ResponseEntity.ok(userResponseDTO);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getMe(Authentication authentication) {
+        UserResponseDTO userResponseDTO = userService.getMe(authentication);
+
+        return ResponseEntity.ok(userResponseDTO);
+    }
+
 
 }

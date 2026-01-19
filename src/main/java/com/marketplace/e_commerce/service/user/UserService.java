@@ -56,6 +56,25 @@ public class UserService {
         return usersList;
     }
 
+    public UserResponseDTO getMe(Authentication authentication) {
+        if(authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("Unauthenticated");
+        }
+
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new
+        RuntimeException("User not found"));
+
+        return new UserResponseDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getAvatarUrl(),
+                user.getRoles()
+        );
+    }
+
     public UserResponseDTO updateAvatar(UpdateAvatarRequestDTO dto, Authentication authentication) {
         String email = authentication.getName();
         System.out.println("AUTH NAME >>> " + authentication.getName());
