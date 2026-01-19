@@ -3,7 +3,7 @@ package com.marketplace.e_commerce.controller;
 
 import com.marketplace.e_commerce.DTO.ProductRequestDTO;
 import com.marketplace.e_commerce.DTO.ProductResponseDTO;
-import com.marketplace.e_commerce.service.ProductService;
+import com.marketplace.e_commerce.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

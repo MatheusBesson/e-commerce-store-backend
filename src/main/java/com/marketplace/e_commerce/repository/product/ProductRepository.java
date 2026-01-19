@@ -1,4 +1,4 @@
-package com.marketplace.e_commerce.repository;
+package com.marketplace.e_commerce.repository.product;
 
 import com.marketplace.e_commerce.model.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,17 +1,13 @@
-package com.marketplace.e_commerce.service;
+package com.marketplace.e_commerce.service.product;
 
 import com.marketplace.e_commerce.DTO.ProductRequestDTO;
 import com.marketplace.e_commerce.DTO.ProductResponseDTO;
 import com.marketplace.e_commerce.model.product.Product;
-import com.marketplace.e_commerce.repository.ProductRepository;
+import com.marketplace.e_commerce.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
