@@ -1,5 +1,6 @@
 package com.marketplace.e_commerce.model.roles;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,15 +23,17 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
     private String password;
 
+    @Column(columnDefinition = "TEXT")
     private String avatarUrl;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles =  new HashSet<>();
+    private Set<String> roles = new HashSet<>();
 
 }
