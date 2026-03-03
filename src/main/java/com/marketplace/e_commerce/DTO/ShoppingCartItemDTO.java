@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public record ShoppingCartItemDTO(
         Long productId,
         String productName,
+        String productImageUrl,
         BigDecimal price,
         int quantity
 ) {

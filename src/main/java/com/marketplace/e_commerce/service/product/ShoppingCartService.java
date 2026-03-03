@@ -57,13 +57,18 @@ public class ShoppingCartService {
         return shoppingCart;
     }
 
-    public ShoppingCartResponseDTO getShoppingCart(Long userId) {
+    public ShoppingCartResponseDTO getShoppingCart(Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Long userId = userDetails.getId();
+
         ShoppingCart cart = getCartByUser(userId);
 
         List<ShoppingCartItemDTO> items = cart.getItems().stream()
                 .map(item -> new ShoppingCartItemDTO(
                         item.getProduct().getProductId(),
                         item.getProduct().getProductName(),
+                        item.getProduct().getProductImageUrl(),
                         item.getPrice(),
                         item.getQuantity()
                 )).toList();
@@ -96,6 +101,7 @@ public class ShoppingCartService {
                 return new ShoppingCartItemDTO(
                         item.getProduct().getProductId(),
                         item.getProduct().getProductName(),
+                        item.getProduct().getProductImageUrl(),
                         item.getPrice(),
                         item.getQuantity()
                 );
@@ -114,6 +120,7 @@ public class ShoppingCartService {
         return new ShoppingCartItemDTO(
                 newItem.getProduct().getProductId(),
                 newItem.getProduct().getProductName(),
+                newItem.getProduct().getProductImageUrl(),
                 newItem.getPrice(),
                 newItem.getQuantity()
         );
@@ -133,6 +140,7 @@ public class ShoppingCartService {
                 .map(item -> new ShoppingCartItemDTO(
                         item.getProduct().getProductId(),
                         item.getProduct().getProductName(),
+                        item.getProduct().getProductImageUrl(),
                         item.getPrice(),
                         item.getQuantity()
                 )).toList();
@@ -156,6 +164,7 @@ public class ShoppingCartService {
                 .map(item -> new ShoppingCartItemDTO(
                         item.getProduct().getProductId(),
                         item.getProduct().getProductName(),
+                        item.getProduct().getProductImageUrl(),
                         item.getPrice(),
                         item.getQuantity()
                 )).toList();

@@ -2,6 +2,7 @@ package com.marketplace.e_commerce.controller;
 
 import com.marketplace.e_commerce.DTO.ShoppingCartItemDTO;
 import com.marketplace.e_commerce.DTO.ShoppingCartResponseDTO;
+import com.marketplace.e_commerce.infra.security.CustomUserDetails;
 import com.marketplace.e_commerce.model.ShoppingCart.ShoppingCart;
 import com.marketplace.e_commerce.service.product.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,16 @@ public class ShoppingCartController {
 
     //FIND CART BY USER ID
     @GetMapping()
-    public ResponseEntity<ShoppingCartResponseDTO> getCartByUserId(@PathVariable Long userId) {
-        ShoppingCartResponseDTO userShoppingCartDTO = shoppingCartService.getShoppingCart(userId);
+    public ResponseEntity<ShoppingCartResponseDTO> getCartByUserId(Authentication authentication) {
+
+        ShoppingCartResponseDTO userShoppingCartDTO = shoppingCartService.getShoppingCart(authentication);
+
         return ResponseEntity.ok(userShoppingCartDTO);
     }
 
     @PostMapping()
     public ResponseEntity<ShoppingCartItemDTO> addCartItem(
-           /*---- @PathVariable ----*/ Authentication authentication,
+            Authentication authentication,
             @RequestBody ShoppingCartItemDTO request
             ) {
         ShoppingCartItemDTO itemDTO = shoppingCartService.addCartItem(authentication, request);

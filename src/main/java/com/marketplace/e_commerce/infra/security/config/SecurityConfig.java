@@ -49,6 +49,7 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/users"
                         ).permitAll()
+                        .requestMatchers("/cart/").authenticated()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
