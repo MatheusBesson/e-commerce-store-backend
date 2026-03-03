@@ -1,5 +1,6 @@
 package com.marketplace.e_commerce.infra.security.service;
 
+import com.marketplace.e_commerce.infra.security.CustomUserDetails;
 import com.marketplace.e_commerce.model.roles.User;
 import com.marketplace.e_commerce.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found"));
 
-        return org.springframework.security.core.userdetails.User
+        return new CustomUserDetails(user);
+
+       /* return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles("USER")
-                .build();
+                .build(); */
     }
 }
 

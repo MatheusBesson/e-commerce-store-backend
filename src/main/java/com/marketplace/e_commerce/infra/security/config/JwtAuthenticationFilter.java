@@ -1,5 +1,6 @@
 package com.marketplace.e_commerce.infra.security.config;
 
+import com.marketplace.e_commerce.infra.security.CustomUserDetails;
 import com.marketplace.e_commerce.infra.security.service.JwtService;
 import com.marketplace.e_commerce.model.roles.User;
 import com.marketplace.e_commerce.repository.user.UserRepository;
@@ -62,11 +63,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
+
+            CustomUserDetails userDetails = new CustomUserDetails(user);
+
+
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            email,
+                            userDetails,
                             null,
-                            Collections.emptyList() // roles depois
+                            userDetails.getAuthorities() // roles depois
                     );
 
             authentication.setDetails(

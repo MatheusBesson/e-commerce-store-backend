@@ -3,6 +3,8 @@ package com.marketplace.e_commerce.service.product;
 import com.marketplace.e_commerce.DTO.OrderResponseDTO;
 import com.marketplace.e_commerce.DTO.ShoppingCartItemDTO;
 import com.marketplace.e_commerce.DTO.ShoppingCartResponseDTO;
+import com.marketplace.e_commerce.infra.security.CustomUserDetails;
+import com.marketplace.e_commerce.infra.security.service.CustomUserDetailsService;
 import com.marketplace.e_commerce.model.ShoppingCart.CartItem;
 import com.marketplace.e_commerce.model.ShoppingCart.Order.Order;
 import com.marketplace.e_commerce.model.ShoppingCart.Order.OrderItem;
@@ -16,6 +18,7 @@ import com.marketplace.e_commerce.repository.product.ShoppingCartRepository;
 import com.marketplace.e_commerce.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -73,7 +76,12 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public ShoppingCartItemDTO addCartItem(Long userId, ShoppingCartItemDTO itemDTO) {
+    public ShoppingCartItemDTO addCartItem(Authentication authentication, ShoppingCartItemDTO itemDTO) {
+
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        Long userId = userDetails.getId();
+
         ShoppingCart cart = getCartByUser(userId);
 
         Product product = productRepository.findById(itemDTO.productId())

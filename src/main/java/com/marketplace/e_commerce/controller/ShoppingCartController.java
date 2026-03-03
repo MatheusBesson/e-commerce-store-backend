@@ -6,6 +6,7 @@ import com.marketplace.e_commerce.model.ShoppingCart.ShoppingCart;
 import com.marketplace.e_commerce.service.product.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users/{userId}/cart")
+@RequestMapping("/cart")
 public class ShoppingCartController {
 
     @Autowired
@@ -31,10 +32,10 @@ public class ShoppingCartController {
 
     @PostMapping()
     public ResponseEntity<ShoppingCartItemDTO> addCartItem(
-            @PathVariable Long userId,
+           /*---- @PathVariable ----*/ Authentication authentication,
             @RequestBody ShoppingCartItemDTO request
             ) {
-        ShoppingCartItemDTO itemDTO = shoppingCartService.addCartItem(userId, request);
+        ShoppingCartItemDTO itemDTO = shoppingCartService.addCartItem(authentication, request);
 
         return ResponseEntity.ok(itemDTO);
     }
